@@ -9,6 +9,7 @@ def index(request):
         "entries": list_entries()
     })
 
+# illustrate the pages using python-markdown2, and will return error if no page found
 def entry(request, title):
     entry_content = get_entry(title)
 
@@ -24,17 +25,14 @@ def entry(request, title):
         "content": html_content
     })
 
+# the searching page, using q parameter to search
 def search(request):
     query = request.GET.get("q", "")
     entries = list_entries()
 
     matching_entries = [entry for entry in entries if query.lower() in entry.lower()]
 
-    if len(matching_entries) == 0:
-        return render(request, "encyclopedia/error.html", {
-            "error_message": "The requested page was not found."
-        })
-    elif len(matching_entries) == 1:
+    if len(matching_entries) == 1:
         return redirect('entry', title=matching_entries[0])
     else:
         return render(request, "encyclopedia/search_results.html", {
@@ -42,6 +40,7 @@ def search(request):
             "entries": matching_entries
         })
 
+# create one new page, show one [title] and one [content] (in markdown grammer)
 def new_page(request):
     if request.method == "POST":
         title = request.POST["title"]
@@ -56,8 +55,9 @@ def new_page(request):
         save_entry(title, content)
         return redirect('entry', title=title)
 
-    return render(request, "encyclopedia/newpage.html")
+    return render(request, "encyclopedia/new_page.html")
 
+# return one random page
 def random_page(request):
     entries = list_entries()
     random_entry = random.choice(entries)

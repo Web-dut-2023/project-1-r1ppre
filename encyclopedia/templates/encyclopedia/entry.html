@@ -1,0 +1,6 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block body %}
+  <h1><li><a href="https://en.wikipedia.org/wiki/{{ title }}">{{ title }}(专业)</a></li></h1>
+  <div>{{ content|safe }}</div>
+{% endblock %}

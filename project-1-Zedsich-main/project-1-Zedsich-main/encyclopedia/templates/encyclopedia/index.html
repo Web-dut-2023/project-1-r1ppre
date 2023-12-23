@@ -9,8 +9,7 @@
 
     <ul>
         {% for entry in entries %}
-            <li><a href="{% url 'entry' entry %}">{{ entry }}百科词条(业余)</a></li>
-            <h5><a href="https://en.wikipedia.org/wiki/{{entry}}">{{ entry }}百科词条(专业)</a></h5><br>
+            <li>{{ entry }}</li>
         {% endfor %}
     </ul>
 
